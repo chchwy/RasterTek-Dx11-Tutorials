@@ -16,6 +16,7 @@ class GraphicsClass
 {
 public:
 	bool Initialize( int, int, HWND ) { return true; }
+	bool Shutdown() { return true; }
 };
 
 
@@ -30,6 +31,7 @@ public:
 
 private:
 	void InitializeWindows( int screenWidth, int screenHeight );
+	void ShutdownWindows();
 
 	InputClass* m_Input;
 	GraphicsClass* m_Graphics;

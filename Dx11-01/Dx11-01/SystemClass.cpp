@@ -61,10 +61,33 @@ void SystemClass::Run()
 
 bool SystemClass::Shutdown()
 {
+	// Release the graphics object.
+	if ( m_Graphics )
+	{
+		m_Graphics->Shutdown();
+		delete m_Graphics;
+		m_Graphics = 0;
+	}
+
+	// Release the input object.
+	if ( m_Input )
+	{
+		delete m_Input;
+		m_Input = 0;
+	}
+
+	// Shutdown the window.
+	ShutdownWindows();
+
 	return true;
 }
 
 void SystemClass::InitializeWindows( int screenWidth, int screenHeight )
 {
 	throw std::exception( "The method or operation is not implemented." );
+}
+
+void SystemClass::ShutdownWindows()
+{
+
 }
