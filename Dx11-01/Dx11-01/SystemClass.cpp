@@ -203,7 +203,29 @@ void SystemClass::InitializeWindows( int& screenWidth, int& screenHeight )
 
 void SystemClass::ShutdownWindows()
 {
+	// Show the mouse cursor.
+	//ShowCursor( true );
 
+	// Fix the display settings if leaving full screen mode.
+	/*
+	if ( FULL_SCREEN )
+	{
+		ChangeDisplaySettings( NULL, 0 );
+	}
+	*/
+
+	// Remove the window.
+	DestroyWindow( m_hwnd );
+	m_hwnd = NULL;
+
+	// Remove the application instance.
+	UnregisterClass( m_applicationName, m_hinstance );
+	m_hinstance = NULL;
+
+	// Release the pointer to this class.
+	ApplicationHandle = NULL;
+
+	return;
 }
 
 bool SystemClass::Frame()
