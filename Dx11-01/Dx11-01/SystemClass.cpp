@@ -5,7 +5,9 @@
 #include "SystemClass.h"
 
 
-SystemClass::SystemClass()
+SystemClass::SystemClass() :
+	m_Input( nullptr ),
+	m_Graphics( nullptr )
 {
 }
 
@@ -56,7 +58,39 @@ bool SystemClass::Initialize()
 
 void SystemClass::Run()
 {
+	MSG msg;
+	
+	// Initialize the message structure.
+	ZeroMemory( &msg, sizeof( MSG ) );
 
+	// Loop until there is a quit message from the window or the user.
+	bool done = false;
+	bool result = false;
+
+	while ( !done )
+	{
+		// Handle the windows messages.
+		if ( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
+		{
+			TranslateMessage( &msg );
+			DispatchMessage( &msg );
+		}
+
+		// If windows signals to end the application then exit out.
+		if ( msg.message == WM_QUIT )
+		{
+			done = true;
+		}
+		else
+		{
+			// Otherwise do the frame processing.
+			result = Frame();
+			if ( !result )
+			{
+				done = true;
+			}
+		}
+	}
 }
 
 bool SystemClass::Shutdown()
@@ -84,10 +118,30 @@ bool SystemClass::Shutdown()
 
 void SystemClass::InitializeWindows( int screenWidth, int screenHeight )
 {
-	throw std::exception( "The method or operation is not implemented." );
+
 }
 
 void SystemClass::ShutdownWindows()
 {
 
+}
+
+bool SystemClass::Frame()
+{
+	bool result;
+
+	// Check if the user pressed escape and wants to exit the application.
+	if ( m_Input->IsKeyDown( VK_ESCAPE ) )
+	{
+		return false;
+	}
+
+	// Do the frame processing for the graphics object.
+	result = m_Graphics->Frame();
+	if ( !result )
+	{
+		return false;
+	}
+
+	return true;
 }

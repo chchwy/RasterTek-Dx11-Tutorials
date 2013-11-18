@@ -10,6 +10,7 @@ class InputClass
 {
 public:
 	bool Initialize() { return true;  }
+	bool IsKeyDown( int nKeyCode ) { return false; }
 };
 
 class GraphicsClass
@@ -17,6 +18,8 @@ class GraphicsClass
 public:
 	bool Initialize( int, int, HWND ) { return true; }
 	bool Shutdown() { return true; }
+
+	bool Frame() { return true; }
 };
 
 
@@ -28,10 +31,13 @@ public:
 	bool Initialize();
 	void Run();
 	bool Shutdown();
+	
+	LRESULT CALLBACK MessageHandler( HWND, UINT, WPARAM, LPARAM );
 
 private:
 	void InitializeWindows( int screenWidth, int screenHeight );
 	void ShutdownWindows();
+	bool Frame();
 
 	InputClass* m_Input;
 	GraphicsClass* m_Graphics;
