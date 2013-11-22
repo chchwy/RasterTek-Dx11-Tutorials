@@ -2,6 +2,8 @@
 #ifndef GRAPHICS_CLASS_H
 #define GRAPHICS_CLASS_H
 
+#include "D3DClass.h"
+
 const bool FULL_SCREEN = false;
 const bool VSYNC_ENABLED = true;
 const float SCREEN_DEPTH = 1000.0f;
@@ -20,7 +22,9 @@ public:
     bool Frame();
 
 private:
-    void Render();
+    bool Render();
+
+    D3DClass* m_pD3D;
 };
 
 #endif 
