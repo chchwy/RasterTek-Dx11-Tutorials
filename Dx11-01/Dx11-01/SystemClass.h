@@ -3,26 +3,10 @@
 #define SYSTEM_CLASS_H
 
 #include <windows.h>
+#include "InputClass.h"
+#include "GraphicsClass.h"
 
 #define WIN32_LEAN_AND_MEAN
-
-class InputClass 
-{
-public:
-	bool Initialize() { return true;  }
-	bool IsKeyDown( int nKeyCode ) { return false; }
-	void KeyDown( unsigned int nKeyCode ) {}
-	void KeyUp( unsigned int nKeyCode ) {}
-};
-
-class GraphicsClass
-{
-public:
-	bool Initialize( int, int, HWND ) { return true; }
-	bool Shutdown() { return true; }
-
-	bool Frame() { return true; }
-};
 
 
 class SystemClass
