@@ -22,15 +22,15 @@ public:
     ModelClass();
     ~ModelClass();
 
-    bool Initialize();
+    bool Initialize( ID3D11Device* );
     void Shutdown();
-    void Render();
+    void Render( ID3D11DeviceContext* );
 
     int GetIndexCount();
 private:
-    bool CreateBuffer() { return false; }
+    bool CreateBuffer( ID3D11Device* );
     void ReleaseBuffer() { }
-    void RenderBuffer() {}
+    void RenderBuffer( ID3D11DeviceContext* );
 
     ID3D11Buffer* m_pVertexBuffer;
     ID3D11Buffer* m_pIndexBuffer;
