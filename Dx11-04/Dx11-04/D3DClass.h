@@ -10,6 +10,10 @@
 
 using DirectX::XMMATRIX;
 
+#ifndef SAFE_RELEASE
+#define SAFE_RELEASE(x) if(x) { x->Release(); x = NULL; }
+#endif
+
 
 class D3DClass
 {

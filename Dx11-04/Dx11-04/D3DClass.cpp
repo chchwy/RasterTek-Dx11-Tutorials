@@ -9,7 +9,7 @@
 
 using namespace DirectX;
 
-#define SAFE_RELEASE(x) if(x) { x->Release(); x = NULL; }
+
 
 
 D3DClass::D3DClass() :
