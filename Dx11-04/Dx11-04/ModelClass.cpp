@@ -100,7 +100,13 @@ bool ModelClass::CreateBuffer( ID3D11Device* pDevice )
     return true;
 }
 
-void ModelClass::RenderBuffer( ID3D11DeviceContext* )
+void ModelClass::RenderBuffer( ID3D11DeviceContext* pContext )
 {
+    uint32_t stride = sizeof( VertexType );
+    uint32_t offset = 0;
 
+    pContext->IASetVertexBuffers( 0, 1, &m_pVertexBuffer, &stride, &offset );
+    pContext->IASetIndexBuffer( m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0 );
+
+    pContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 }
