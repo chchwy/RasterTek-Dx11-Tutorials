@@ -4,6 +4,10 @@
 #include "ColorShaderClass.h"
 
 
+#ifndef SAFE_RELEASE
+#define SAFE_RELEASE(x) if (x) { x->Release(); x = NULL; }
+#endif
+
 ColorShaderClass::ColorShaderClass()
 : m_pVertexShader( NULL )
 , m_pPixelShader( NULL )
@@ -161,6 +165,14 @@ bool ColorShaderClass::InitializeShader( ID3D11Device* pDevice,
     return true;
 }
 
+void ColorShaderClass::ShutdownShader()
+{
+    SAFE_RELEASE( m_pMatrixBuffer );
+    SAFE_RELEASE( m_pInputLayout );
+    SAFE_RELEASE( m_pVertexShader );
+    SAFE_RELEASE( m_pPixelShader );
+}
+
 bool ColorShaderClass::SetShaderParameter( ID3D11DeviceContext*, XMMATRIX&, XMMATRIX&, XMMATRIX& )
 {
     return false;
@@ -170,4 +182,6 @@ void ColorShaderClass::RenderShader( ID3D11DeviceContext*, int )
 {
 
 }
+
+
 
