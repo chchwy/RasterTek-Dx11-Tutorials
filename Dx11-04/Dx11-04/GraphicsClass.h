@@ -2,6 +2,9 @@
 #ifndef GRAPHICS_CLASS_H
 #define GRAPHICS_CLASS_H
 
+#include "CameraClass.h"
+#include "ModelClass.h"
+#include "ColorShaderClass.h"
 #include "D3DClass.h"
 
 const bool FULL_SCREEN = false;
@@ -25,6 +28,9 @@ private:
     bool Render();
 
     D3DClass* m_pD3D;
+    CameraClass* m_pCamera;
+    ModelClass* m_pModel;
+    ColorShaderClass* m_pColorShader;
 };
 
 #endif 

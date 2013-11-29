@@ -4,6 +4,7 @@
 //
 
 #include <tchar.h>
+#include <cstdio>
 #include "SystemClass.h"
 
 int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,

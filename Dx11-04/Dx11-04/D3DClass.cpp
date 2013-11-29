@@ -179,7 +179,10 @@ bool D3DClass::Initialize( int screenWidth, int screenHeight,
     float filedOfView = XM_PI / 4.0f;
     float screenAspect = ( float )screenWidth / ( float )screenHeight;
     
-    m_projectionMatrix = XMMatrixPerspectiveFovLH( filedOfView, screenAspect, screenNear, screenDepth );
+    m_projectionMatrix = XMMatrixPerspectiveFovLH( filedOfView, 
+                                                   screenAspect, 
+                                                   screenNear, 
+                                                   screenDepth );
     m_worldMatrix = XMMatrixIdentity();
     m_orthoMatrix = XMMatrixOrthographicLH( screenWidth, screenHeight, screenNear, screenDepth );
 

@@ -1,4 +1,5 @@
 
+#include <fstream>
 #include "D3Dcompiler.h"
 #include "D3DX11async.h"
 #include "ColorShaderClass.h"
@@ -24,7 +25,7 @@ ColorShaderClass::~ColorShaderClass()
 
 bool ColorShaderClass::Initialize( ID3D11Device* pDevice, HWND hWnd )
 {
-    return InitializeShader( pDevice, hWnd, L"color.vs", L"color.ps" );
+    return InitializeShader( pDevice, hWnd, L"ColorVertexShader.hlsl", L"ColorPixelShader.hlsl" );
 }
 
 void ColorShaderClass::Shutdown()
@@ -149,7 +150,7 @@ bool ColorShaderClass::InitializeShader( ID3D11Device* pDevice,
 
     CD3D11_BUFFER_DESC matrixBufferDesc;
     matrixBufferDesc.ByteWidth = sizeof( MatrixBufferType );
-    matrixBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+    matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
     matrixBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
     matrixBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
     matrixBufferDesc.MiscFlags = 0;
@@ -173,14 +174,77 @@ void ColorShaderClass::ShutdownShader()
     SAFE_RELEASE( m_pPixelShader );
 }
 
-bool ColorShaderClass::SetShaderParameter( ID3D11DeviceContext*, XMMATRIX&, XMMATRIX&, XMMATRIX& )
+bool ColorShaderClass::SetShaderParameter( ID3D11DeviceContext* pContext, 
+                                           XMMATRIX& worldMatrix, 
+                                           XMMATRIX& viewMatrix, 
+                                           XMMATRIX& projectionMatrix )
 {
-    return false;
+    HRESULT hr = S_OK;
+
+    worldMatrix = XMMatrixTranspose( worldMatrix );
+    viewMatrix = XMMatrixTranspose( viewMatrix );
+    projectionMatrix = XMMatrixTranspose( projectionMatrix );
+
+    D3D11_MAPPED_SUBRESOURCE mappedResource;
+    hr = pContext->Map( m_pMatrixBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource );
+
+    if ( FAILED( hr ) )
+    {
+        return false;
+    }
+
+    MatrixBufferType* pData = ( MatrixBufferType* )mappedResource.pData;
+    pData->world = worldMatrix;
+    pData->view = viewMatrix;
+    pData->projection = projectionMatrix;
+
+    pContext->Unmap( m_pMatrixBuffer, 0 );
+
+    pContext->VSSetConstantBuffers( 0, 1, &m_pMatrixBuffer );
+
+    return true;
 }
 
-void ColorShaderClass::RenderShader( ID3D11DeviceContext*, int )
+void ColorShaderClass::RenderShader( ID3D11DeviceContext* pContext, int indexCount )
 {
+    pContext->IASetInputLayout( m_pInputLayout );
 
+    pContext->VSSetShader( m_pVertexShader, NULL, 0 );
+    pContext->PSSetShader( m_pPixelShader, NULL, 0 );
+
+    pContext->DrawIndexed( indexCount, 0, 0 );
+}
+
+void ColorShaderClass::OutputShaderErrorMessage( ID3DBlob* pErrorMessage, 
+                                                 HWND hWnd , 
+                                                 WCHAR* strShaderFilename )
+{
+    std::ofstream fout;
+
+    // Get a pointer to the error message text buffer.
+    char* strCompileErrors = ( char* )( pErrorMessage->GetBufferPointer( ) );
+
+    // Get the length of the message.
+    uint32_t bufferSize = pErrorMessage->GetBufferSize();
+
+    // Open a file to write the error message to.
+    fout.open( "shader-error.txt" );
+
+    // Write out the error message.
+    for ( int i = 0; i < bufferSize; i++ )
+    {
+        fout << strCompileErrors[ i ];
+    }
+
+    // Close the file.
+    fout.close();
+
+    // Release the error message.
+    pErrorMessage->Release();
+    pErrorMessage = 0;
+
+    // Pop a message up on the screen to notify the user to check the text file for compile errors.
+    MessageBox( hWnd, L"Error compiling shader.  Check shader-error.txt for message.", strShaderFilename, MB_OK );
 }
 
 
