@@ -72,6 +72,7 @@ bool SystemClass::Initialize()
 		return false;
 	}
 
+    OutputDebugString( L"SystemClass initialize successfully.\n" );
 	return true;
 }
 

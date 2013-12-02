@@ -1,5 +1,7 @@
 
 #include <windows.h>
+#include <string>
+#include <sstream>
 #include "D3DClass.h"
 #include "GraphicsClass.h"
 
@@ -57,6 +59,11 @@ bool GraphicsClass::Initialize( int screenWidth, int screenHeight, HWND hWnd )
         MessageBox( hWnd, L"Could not initialize the color shader.", L"ERROR", MB_OK );
         return false;
     }
+
+    std::wostringstream sout;
+
+    sout << "GraphicsClass init with (" << screenWidth << ", " << screenHeight << ").\n";
+    OutputDebugString( sout.str().c_str() );
 
     return true;
 }
@@ -117,7 +124,7 @@ bool GraphicsClass::Render()
 
     // Render the model using the color shader.
     bool bResult = m_pColorShader->Render( m_pD3D->GetDeviceContext(), 
-                                           m_pModel->GetIndexCount(), 
+                                           m_pModel->GetIndexCount(),
                                            worldMatrix, viewMatrix, projectionMatrix );
     if ( !bResult )
     {
@@ -125,5 +132,6 @@ bool GraphicsClass::Render()
     }
 
     m_pD3D->EndScene();
+
     return true;
 }

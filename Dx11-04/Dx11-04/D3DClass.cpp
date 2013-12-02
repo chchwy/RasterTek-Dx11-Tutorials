@@ -1,4 +1,5 @@
 
+#include <cstdio>
 #include "DirectXColors.h"
 #include "D3DClass.h"
 
@@ -36,7 +37,6 @@ bool D3DClass::Initialize( int screenWidth, int screenHeight,
                            float screenDepth,
                            float screenNear )
 {
-
     // Create swap chain, device and device context
     UINT createDeviceFlags = D3D11_CREATE_DEVICE_DEBUG;
 
@@ -148,6 +148,7 @@ bool D3DClass::Initialize( int screenWidth, int screenHeight,
     dsvd.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
     dsvd.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
     dsvd.Texture2D.MipSlice = 0;
+    dsvd.Flags = 0;
 
     m_pDevice->CreateDepthStencilView( m_pDepthStencilBuffer, &dsvd, &m_pDepthStencilView );
 
@@ -207,9 +208,10 @@ void D3DClass::Shutdown()
 
 }
 
-void D3DClass::BeginScene( float, float, float, float )
+void D3DClass::BeginScene( float red, float green, float blue, float alpha)
 {
-    m_pContext->ClearRenderTargetView( m_pRenderTargetView, Colors::Blue );
+    float color[] = { red, green, blue, alpha };
+    m_pContext->ClearRenderTargetView( m_pRenderTargetView, color );
 }
 
 void D3DClass::EndScene()
