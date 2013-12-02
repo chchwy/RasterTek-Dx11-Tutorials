@@ -39,7 +39,7 @@ void CameraClass::Render()
 {
     XMVECTOR up = XMLoadFloat3( &XMFLOAT3( 0, 1, 0 ) );
     XMVECTOR position = XMLoadFloat3( &m_position );
-    XMVECTOR lookAt = XMLoadFloat3( &XMFLOAT3( 1, 0, 0 ) );
+    XMVECTOR lookAt = XMLoadFloat3( &XMFLOAT3( 0, 0, 1 ) );
 
     float pitch = XMConvertToRadians( m_rotation.x );
     float yaw   = XMConvertToRadians( m_rotation.y );
