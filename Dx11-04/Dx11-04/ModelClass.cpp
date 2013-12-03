@@ -42,12 +42,12 @@ bool ModelClass::CreateBuffer( ID3D11Device* pDevice )
 
     VertexType* pVertex = new VertexType[ m_vertexCount ];
     
-    pVertex[ 0 ].position = XMFLOAT3( -10, -10, 0 );
-    pVertex[ 0 ].color = XMFLOAT4( 1, 1, 1, 1 );
-    pVertex[ 1 ].position = XMFLOAT3( 0, 10, 0 );
-    pVertex[ 1 ].color = XMFLOAT4( 1, 1, 1, 1 );
-    pVertex[ 2 ].position = XMFLOAT3( 10, -10, 0 );
-    pVertex[ 2 ].color = XMFLOAT4( 1, 1, 1, 1 );
+    pVertex[ 0 ].position = XMFLOAT3( -1, -1, 0 );
+    pVertex[ 0 ].color = XMFLOAT4( 1, 0, 1, 1 );
+    pVertex[ 1 ].position = XMFLOAT3( 0, 1, 0 );
+    pVertex[ 1 ].color = XMFLOAT4( 1, 1, 0, 1 );
+    pVertex[ 2 ].position = XMFLOAT3( 1, -1, 0 );
+    pVertex[ 2 ].color = XMFLOAT4( 0, 1, 1, 1 );
 
     D3D11_BUFFER_DESC vertexBufferDesc;
     vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;

@@ -60,10 +60,6 @@ bool SystemClass::Initialize()
 
 	// Create the graphics object.  This object will handle rendering all the graphics for this application.
 	m_Graphics = new GraphicsClass;
-	if ( !m_Graphics )
-	{
-		return false;
-	}
 
 	// Initialize the graphics object.
 	result = m_Graphics->Initialize( screenWidth, screenHeight, m_hwnd );

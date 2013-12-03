@@ -52,9 +52,9 @@ void CameraClass::Render()
     up = XMVector3TransformCoord( up, rotationMatrix );
 
     lookAt = position + lookAt;
-    XMMATRIX mat = XMMatrixLookAtLH( position, lookAt, up );
 
-    XMStoreFloat4x4( &m_viewMatrix , XMMatrixLookAtLH( position, lookAt, up ) );
+    XMMATRIX viewMatrix = XMMatrixLookAtLH( position, lookAt, up );
+    XMStoreFloat4x4( &m_viewMatrix , viewMatrix );
 }
 
 void CameraClass::GetViewMatrix( XMMATRIX& viewMatrix )
