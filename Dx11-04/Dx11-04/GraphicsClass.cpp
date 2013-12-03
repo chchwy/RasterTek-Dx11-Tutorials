@@ -102,17 +102,15 @@ bool GraphicsClass::Frame()
 
 bool GraphicsClass::Render()
 {
-    m_pD3D->BeginScene( 0.5, 0.5, 0.5, 1 );
-
-    XMMATRIX viewMatrix;
-    XMMATRIX projectionMatrix;
-    XMMATRIX worldMatrix;
-
     // Clear the buffers to begin the scene.
     m_pD3D->BeginScene( 0.0f, 0.0f, 0.0f, 1.0f );
 
     // Generate the view matrix based on the camera's position.
     m_pCamera->Render();
+
+    XMMATRIX viewMatrix;
+    XMMATRIX projectionMatrix;
+    XMMATRIX worldMatrix;
 
     // Get the world, view, and projection matrices from the camera and d3d objects.
     m_pCamera->GetViewMatrix( viewMatrix );

@@ -14,14 +14,14 @@ using namespace DirectX;
 
 
 D3DClass::D3DClass() :
-m_pDevice( nullptr ),
-m_pContext( nullptr ),
-m_pSwapChain( nullptr ),
-m_pRenderTargetView( nullptr ),
-m_pDepthStencilBuffer( nullptr ),
-m_pDepthStencilState( nullptr ),
-m_pDepthStencilView( nullptr ),
-m_pRasterState( nullptr )
+    m_pDevice( nullptr ),
+    m_pContext( nullptr ),
+    m_pSwapChain( nullptr ),
+    m_pRenderTargetView( nullptr ),
+    m_pDepthStencilBuffer( nullptr ),
+    m_pDepthStencilState( nullptr ),
+    m_pDepthStencilView( nullptr ),
+    m_pRasterState( nullptr )
 {
 
 }

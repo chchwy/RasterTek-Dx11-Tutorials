@@ -14,5 +14,6 @@ struct PixelInputType
 ////////////////////////////////////////////////////////////////////////////////
 float4 ColorPixelShader( PixelInputType input ) : SV_TARGET
 {
-    return input.color;
+    // return input.color;
+    return float4( 0.0f, 1.0f, 0.0f, 1.0f );
 }

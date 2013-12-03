@@ -1,4 +1,5 @@
-#include "stdafx.h"
+
+#include <cstring>
 #include "CameraClass.h"
 
 using namespace DirectX;
@@ -48,9 +49,10 @@ void CameraClass::Render()
     XMMATRIX rotationMatrix = XMMatrixRotationRollPitchYaw( pitch, yaw, roll );
 
     lookAt = XMVector3TransformCoord( lookAt, rotationMatrix );
-    up = XMVector3TransformCoord( lookAt, rotationMatrix );
+    up = XMVector3TransformCoord( up, rotationMatrix );
 
     lookAt = position + lookAt;
+    XMMATRIX mat = XMMatrixLookAtLH( position, lookAt, up );
 
     XMStoreFloat4x4( &m_viewMatrix , XMMatrixLookAtLH( position, lookAt, up ) );
 }

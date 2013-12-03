@@ -68,7 +68,8 @@ bool ColorShaderClass::InitializeShader( ID3D11Device* pDevice,
                                 NULL,
                                 "ColorVertexShader",
                                 "vs_5_0",
-                                D3DCOMPILE_ENABLE_STRICTNESS, 0,
+                                D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG,
+                                0,
                                 NULL,
                                 &pVertexShaderBuffer,
                                 &pErrorMessage,
@@ -92,7 +93,7 @@ bool ColorShaderClass::InitializeShader( ID3D11Device* pDevice,
     hr = D3DX11CompileFromFile( strPixelShaderFilename, NULL, NULL,
                                 "ColorPixelShader",
                                 "ps_5_0",
-                                D3DCOMPILE_ENABLE_STRICTNESS,
+                                D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG,
                                 0, NULL,
                                 &pPixelShaderBuffer,
                                 &pErrorMessage,
@@ -132,8 +133,8 @@ bool ColorShaderClass::InitializeShader( ID3D11Device* pDevice,
 
     D3D11_INPUT_ELEMENT_DESC inputLayouts[] = 
     {
-        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-        { "COLOR"   , 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
     };
 
     hr = pDevice->CreateInputLayout( inputLayouts, 2, 
@@ -148,7 +149,7 @@ bool ColorShaderClass::InitializeShader( ID3D11Device* pDevice,
     pVertexShaderBuffer->Release();
     pPixelShaderBuffer->Release();
 
-    CD3D11_BUFFER_DESC matrixBufferDesc;
+    D3D11_BUFFER_DESC matrixBufferDesc;
     matrixBufferDesc.ByteWidth = sizeof( MatrixBufferType );
     matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
     matrixBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
