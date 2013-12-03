@@ -23,7 +23,6 @@ D3DClass::D3DClass() :
     m_pDepthStencilView( nullptr ),
     m_pRasterState( nullptr )
 {
-
 }
 
 D3DClass::~D3DClass()
@@ -116,8 +115,8 @@ bool D3DClass::Initialize( int screenWidth, int screenHeight,
         return false;
     }
     
-    CD3D11_DEPTH_STENCIL_DESC dsd;
-
+    D3D11_DEPTH_STENCIL_DESC dsd;
+    
     dsd.DepthEnable = true;
     dsd.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
     dsd.DepthFunc = D3D11_COMPARISON_LESS;
@@ -150,7 +149,11 @@ bool D3DClass::Initialize( int screenWidth, int screenHeight,
     dsvd.Texture2D.MipSlice = 0;
     dsvd.Flags = 0;
 
-    m_pDevice->CreateDepthStencilView( m_pDepthStencilBuffer, &dsvd, &m_pDepthStencilView );
+    hr = m_pDevice->CreateDepthStencilView( m_pDepthStencilBuffer, &dsvd, &m_pDepthStencilView );
+    if ( FAILED( hr ) )
+    {
+        return false;
+    }
 
     // Set Render target
     m_pContext->OMSetRenderTargets( 1, &m_pRenderTargetView, m_pDepthStencilView );
@@ -212,6 +215,8 @@ void D3DClass::BeginScene( float red, float green, float blue, float alpha)
 {
     float color[] = { red, green, blue, alpha };
     m_pContext->ClearRenderTargetView( m_pRenderTargetView, color );
+
+    m_pContext->ClearDepthStencilView( m_pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0 );
 }
 
 void D3DClass::EndScene()
