@@ -25,12 +25,12 @@ private:
 	void ShutdownWindows();
 	bool Frame();
 
-	InputClass* m_Input;
-	GraphicsClass* m_Graphics;
+	InputClass*    m_Input = nullptr;
+	GraphicsClass* m_Graphics = nullptr;
 
 	LPCWSTR m_applicationName;
 	HINSTANCE m_hinstance;
-	HWND m_hwnd;
+	HWND m_hwnd = 0;
 };
 
 #endif
