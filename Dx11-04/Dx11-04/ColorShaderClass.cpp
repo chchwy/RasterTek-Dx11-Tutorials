@@ -121,10 +121,13 @@ bool ColorShaderClass::InitializeShader( ID3D11Device* pDevice,
     {
         return false;
     }
+    
+    ID3D11ClassLinkage* pClassLinkage = nullptr;
+    pDevice->CreateClassLinkage( &pClassLinkage );
 
     hr = pDevice->CreatePixelShader( pPixelShaderBuffer->GetBufferPointer(),
                                      pPixelShaderBuffer->GetBufferSize(),
-                                     NULL,
+                                     pClassLinkage,
                                      &m_pPixelShader );
     if ( FAILED( hr ) )
     {

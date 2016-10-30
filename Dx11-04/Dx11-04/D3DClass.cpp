@@ -10,19 +10,11 @@
 
 using namespace DirectX;
 
-
-
-
-D3DClass::D3DClass() :
-    m_pDevice( nullptr ),
-    m_pContext( nullptr ),
-    m_pSwapChain( nullptr ),
-    m_pRenderTargetView( nullptr ),
-    m_pDepthStencilBuffer( nullptr ),
-    m_pDepthStencilState( nullptr ),
-    m_pDepthStencilView( nullptr ),
-    m_pRasterState( nullptr )
+D3DClass::D3DClass()
 {
+    m_projectionMatrix = XMMatrixIdentity();
+    m_worldMatrix = XMMatrixIdentity();
+    m_orthoMatrix = XMMatrixIdentity();
 }
 
 D3DClass::~D3DClass()
@@ -37,7 +29,8 @@ bool D3DClass::Initialize( int screenWidth, int screenHeight,
                            float screenNear )
 {
     // Create swap chain, device and device context
-    UINT createDeviceFlags = D3D11_CREATE_DEVICE_DEBUG;
+    UINT createDeviceFlags = //D3D11_CREATE_DEVICE_PREVENT_INTERNAL_THREADING_OPTIMIZATIONS;
+        D3D11_CREATE_DEVICE_DEBUG;
 
     D3D_FEATURE_LEVEL myFeatureLevel;
 

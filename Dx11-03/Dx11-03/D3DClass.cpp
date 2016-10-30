@@ -38,7 +38,8 @@ bool D3DClass::Initialize( int screenWidth, int screenHeight,
 {
 
     // Create swap chain, device and device context
-    UINT createDeviceFlags = D3D11_CREATE_DEVICE_DEBUG;
+    UINT createDeviceFlags = D3D11_CREATE_DEVICE_PREVENT_INTERNAL_THREADING_OPTIMIZATIONS;
+    //D3D11_CREATE_DEVICE_DEBUG;
 
     D3D_FEATURE_LEVEL myFeatureLevel;
 
