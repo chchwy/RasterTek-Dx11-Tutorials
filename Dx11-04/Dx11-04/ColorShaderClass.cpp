@@ -1,7 +1,6 @@
 
 #include <fstream>
 #include "D3Dcompiler.h"
-#include "D3DX11async.h"
 #include "ColorShaderClass.h"
 
 
@@ -63,17 +62,14 @@ bool ColorShaderClass::InitializeShader( ID3D11Device* pDevice,
     ID3DBlob* pPixelShaderBuffer = NULL;
     ID3DBlob* pErrorMessage = NULL;
 
-    hr = D3DX11CompileFromFile( strVertexShaderFilename,
-                                NULL,
-                                NULL,
-                                "ColorVertexShader",
-                                "vs_5_0",
-                                D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG,
-                                0,
-                                NULL,
-                                &pVertexShaderBuffer,
-                                &pErrorMessage,
-                                NULL );
+    hr = D3DCompileFromFile( strVertexShaderFilename,
+                             NULL, // defines
+                             NULL, // includes
+                             "ColorVertexShader",  // entry point
+                             "vs_5_0",  // target
+                             D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG, 0,
+                             &pVertexShaderBuffer,
+                             &pErrorMessage );
 
     if ( FAILED( hr ) )
     {
@@ -90,14 +86,13 @@ bool ColorShaderClass::InitializeShader( ID3D11Device* pDevice,
     }
 
 
-    hr = D3DX11CompileFromFile( strPixelShaderFilename, NULL, NULL,
-                                "ColorPixelShader",
-                                "ps_5_0",
-                                D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG,
-                                0, NULL,
-                                &pPixelShaderBuffer,
-                                &pErrorMessage,
-                                NULL );
+    hr = D3DCompileFromFile( strPixelShaderFilename, 
+							 NULL, NULL,
+                             "ColorPixelShader",
+                             "ps_5_0",
+                             D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG, 0, 
+							 &pPixelShaderBuffer,
+                             &pErrorMessage );
 
     if ( FAILED( hr ) )
     {
