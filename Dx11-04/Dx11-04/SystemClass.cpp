@@ -166,7 +166,9 @@ void SystemClass::InitializeWindows( int& screenWidth, int& screenHeight )
 	RegisterClassEx( &wc );
 
 	bool bIsFullScreen = false;
-	if ( bIsFullScreen ) {}
+	if ( bIsFullScreen ) 
+	{
+	}
 	else
 	{
 		// Determine the resolution of the clients desktop screen.
